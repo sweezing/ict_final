@@ -26,13 +26,15 @@ examine/
 ## Features
 
 ### Java Application
+
 - **Repository Pattern**: Abstract interfaces with PostgreSQL and MongoDB implementations
 - **Database Switching**: Switch between databases without modifying business logic
-- **Entity Models**: 
+- **Entity Models**:
   - `CardUser`: name, surname, IIN
   - `Card`: inherits name/surname from CardUser, plus PAN, CVV, expiration date, currency, balance
 
 ### Web Application
+
 - **REST API**: Full CRUD operations for CardUsers and Cards
 - **Database Switching**: Switch between PostgreSQL and MongoDB via frontend
 - **Money Operations**: Transfer, withdraw, and deposit money
@@ -40,7 +42,7 @@ examine/
 
 ## Prerequisites
 
-- **Java 25 (Temurin 25)**: Required for the Java application
+- **Java 21 (Temurin 21)**: Required for the Java application
 - **PostgreSQL**: Database server (user: postgres, no password)
 - **MongoDB**: Database server (local or cluster)
 - **Node.js**: Version 14+ for the web server
@@ -57,6 +59,7 @@ examine/
    - Tables: `card_users`, `cards`
 
 **Note**: PostgreSQL is configured to use:
+
 - User: `postgres`
 - Password: (empty)
 - Database: `banking_system`
@@ -65,33 +68,39 @@ examine/
 ### 2. MongoDB Setup
 
 **Option A: Local MongoDB**
+
 1. Install MongoDB locally
 2. Start MongoDB service
 3. The application will use: `mongodb://localhost:27017`
 
 **Option B: MongoDB Atlas (Cloud)**
+
 1. Create a MongoDB Atlas account
 2. Create a cluster
 3. Get your connection string
 4. Update `server.js` and `MongoConnection.java` with your connection string
 
 **Database and Collection Names:**
+
 - Database: `banking_system`
 - Collections: `card_users`, `cards`
 
 ### 3. Java Application Setup
 
 1. Build the project:
+
 ```bash
 ./gradlew build
 ```
 
 2. Run the application:
+
 ```bash
 ./gradlew run
 ```
 
 Or compile and run manually:
+
 ```bash
 ./gradlew compileJava
 java -cp build/classes/java/main:build/libs/* org.example.Main
@@ -100,11 +109,13 @@ java -cp build/classes/java/main:build/libs/* org.example.Main
 ### 4. Node.js Web Application Setup
 
 1. Install dependencies:
+
 ```bash
 npm install
 ```
 
 2. Start the server:
+
 ```bash
 npm start
 ```
@@ -112,6 +123,7 @@ npm start
 The server will run on `http://localhost:3000`
 
 3. Open your browser and navigate to:
+
 ```
 http://localhost:3000
 ```
@@ -119,10 +131,12 @@ http://localhost:3000
 ## API Endpoints
 
 ### Database Management
+
 - `POST /api/switch-db` - Switch between PostgreSQL and MongoDB
 - `GET /api/db-type` - Get current database type
 
 ### Card Users
+
 - `GET /api/card-users` - Get all card users
 - `GET /api/card-users/:iin` - Get card user by IIN
 - `POST /api/card-users` - Create card user
@@ -130,6 +144,7 @@ http://localhost:3000
 - `DELETE /api/card-users/:iin` - Delete card user
 
 ### Cards
+
 - `GET /api/cards` - Get all cards
 - `GET /api/cards/:id` - Get card by ID
 - `POST /api/cards` - Create card
@@ -137,6 +152,7 @@ http://localhost:3000
 - `DELETE /api/cards/:id` - Delete card
 
 ### Money Operations
+
 - `POST /api/cards/transfer` - Transfer money between cards
 - `POST /api/cards/withdraw` - Withdraw money (requires CVV)
 - `POST /api/cards/deposit` - Deposit money to card
@@ -144,11 +160,13 @@ http://localhost:3000
 ## Data Model
 
 ### CardUser
+
 - `name` (String): First name
 - `surname` (String): Last name
 - `iin` (String): Individual Identification Number (Primary Key)
 
 ### Card
+
 - `cardId` (Integer): Internal card ID (Primary Key in PostgreSQL)
 - `pan` (String): 16-digit unique card number (cannot duplicate)
 - `cvv` (String): 3-digit security code (can duplicate)
@@ -161,33 +179,27 @@ http://localhost:3000
 ## Functionality
 
 ### Card Management
+
 - Create multiple cards
 - Create multiple card users
 - Update card and user information
 - Delete cards and users
 
 ### Money Operations
+
 - **Transfer**: Transfer money by PAN or name/surname
 - **Withdraw**: Withdraw money (requires CVV verification)
 - **Deposit**: Deposit money by PAN or name/surname
 
 ### Display
+
 - Cards list in format: `name surname = pan, cvv`
 - Real-time updates when switching databases
 
-## Repository Pattern Implementation
-
-The application demonstrates the Repository Pattern with:
-- **Interfaces**: `CardUserRepository`, `CardRepository`
-- **PostgreSQL Implementation**: `PostgresCardUserRepository`, `PostgresCardRepository`
-- **MongoDB Implementation**: `MongoCardUserRepository`, `MongoCardRepository`
-
-Business logic remains unchanged when switching between database implementations.
-
-## Configuration
-
 ### PostgreSQL Connection
+
 Edit `DatabaseConnection.java`:
+
 ```java
 private static final String POSTGRES_URL = "jdbc:postgresql://localhost:5432/banking_system";
 private static final String POSTGRES_USER = "postgres";
@@ -195,7 +207,9 @@ private static final String POSTGRES_PASSWORD = "";
 ```
 
 ### MongoDB Connection
+
 Edit `MongoConnection.java` or `server.js`:
+
 ```java
 // For local MongoDB
 private static final String DEFAULT_CONNECTION_STRING = "mongodb://localhost:27017";
@@ -207,7 +221,9 @@ private static final String DEFAULT_CONNECTION_STRING = "mongodb+srv://user:pass
 ## Troubleshooting
 
 ### MongoDB Dependency Warnings in IDE
+
 If you see import errors for MongoDB classes in your IDE (e.g., "MongoClient cannot be resolved"):
+
 - **This is normal** - these are IDE sync issues, not code errors
 - The dependencies are correctly configured in `build.gradle.kts`
 - Run `./gradlew build` to download dependencies
@@ -215,21 +231,25 @@ If you see import errors for MongoDB classes in your IDE (e.g., "MongoClient can
 - The code will compile and run correctly despite IDE warnings
 
 ### PostgreSQL Connection Issues
+
 - Ensure PostgreSQL is running: `pg_isready`
 - Check if database exists: `psql -U postgres -l`
 - Verify user permissions
 
 ### MongoDB Connection Issues
+
 - For local MongoDB: Ensure service is running
 - For Atlas: Verify connection string and network access settings
 - Check firewall rules
 
 ### Java Compilation Issues
+
 - Ensure Java 25 (Temurin 25) is installed: `java -version`
 - Verify Gradle wrapper: `./gradlew --version`
 - If build fails, try: `./gradlew clean build`
 
 ### Node.js Server Issues
+
 - Check if port 3000 is available
 - Verify all dependencies are installed: `npm list`
 - Check server logs for detailed error messages
@@ -245,4 +265,3 @@ If you see import errors for MongoDB classes in your IDE (e.g., "MongoClient can
 ## License
 
 This project is created for educational purposes as part of the Information and Communication Technologies course.
-
