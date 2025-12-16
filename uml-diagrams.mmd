@@ -1,0 +1,76 @@
+%% UML Class Diagram
+classDiagram
+    class CardUser {
+      +String name
+      +String surname
+      +String iin
+    }
+
+    class Card {
+      +Integer cardId
+      +String pan
+      +String cvv
+      +String dateOfExpire
+      +String name
+      +String surname
+      +String currency
+      +Double balance
+    }
+
+    class CardUserDao {
+      <<interface>>
+      +CardUser create(CardUser user)
+      +CardUser findByIin(String iin)
+      +List~CardUser~ findAll()
+      +CardUser update(CardUser user)
+      +void deleteByIin(String iin)
+    }
+
+    class CardDao {
+      <<interface>>
+      +Card create(Card card)
+      +Card findById(Integer id)
+      +List~Card~ findAll()
+      +Card update(Card card)
+      +void deleteById(Integer id)
+    }
+
+    class PostgresCardUserDao {
+    }
+
+    class PostgresCardDao {
+    }
+
+    class MongoCardUserDao {
+    }
+
+    class MongoCardDao {
+    }
+
+    CardUser "1" <-- "0..*" Card : owner
+    CardUserDao <|.. PostgresCardUserDao
+    CardUserDao <|.. MongoCardUserDao
+    CardDao <|.. PostgresCardDao
+    CardDao <|.. MongoCardDao
+
+%% UML Deployment Diagram
+---
+graph TD
+    subgraph Client
+        Browser["Web Browser\n(HTML + CSS + jQuery)"]
+    end
+
+    subgraph Server["Application Server"]
+        NodeApp["Node.js + Express\n(server.js)"]
+    end
+
+    subgraph Databases
+        PG["PostgreSQL\nbanking_system"]
+        Mongo["MongoDB / MongoDB Atlas\nbanking_system"]
+    end
+
+    Browser -->|"HTTP / AJAX (REST API)"| NodeApp
+    NodeApp -->|"SQL over TCP\n(port 5432)"| PG
+    NodeApp -->|"MongoDB Driver\n(port 27017 or Atlas URI)"| Mongo
+
+

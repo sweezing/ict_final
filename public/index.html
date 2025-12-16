@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking System - Credit Card Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Banking System - Credit Card Management</h1>
+        
+        <!-- Database Switch Section -->
+        <div class="section">
+            <h2>Database Selection</h2>
+            <div class="db-switch">
+                <label>Current Database: <span id="current-db">PostgreSQL</span></label>
+                <button id="switch-postgres" class="btn btn-primary">Use PostgreSQL</button>
+                <button id="switch-mongo" class="btn btn-primary">Use MongoDB</button>
+            </div>
+        </div>
+
+        <!-- Card Users Section -->
+        <div class="section">
+            <h2>Card Users Management</h2>
+            <div class="form-group">
+                <input type="text" id="user-name" placeholder="Name">
+                <input type="text" id="user-surname" placeholder="Surname">
+                <input type="text" id="user-iin" placeholder="IIN">
+                <button id="create-user" class="btn btn-success">Create User</button>
+            </div>
+            <div class="form-group">
+                <input type="text" id="update-user-iin" placeholder="IIN to update">
+                <input type="text" id="update-user-name" placeholder="New Name">
+                <input type="text" id="update-user-surname" placeholder="New Surname">
+                <button id="update-user" class="btn btn-warning">Update User</button>
+            </div>
+            <div class="form-group">
+                <input type="text" id="delete-user-iin" placeholder="IIN to delete">
+                <button id="delete-user" class="btn btn-danger">Delete User</button>
+            </div>
+            <button id="load-users" class="btn btn-info">Load All Users</button>
+            <div id="users-list"></div>
+        </div>
+
+        <!-- Cards Section -->
+        <div class="section">
+            <h2>Cards Management</h2>
+            <div class="form-group">
+                <input type="text" id="card-pan" placeholder="PAN (16 digits)" maxlength="16">
+                <input type="text" id="card-cvv" placeholder="CVV (3 digits)" maxlength="3">
+                <input type="text" id="card-name" placeholder="Name">
+                <input type="text" id="card-surname" placeholder="Surname">
+                <input type="text" id="card-currency" placeholder="Currency">
+                <input type="number" id="card-balance" placeholder="Balance" step="0.01">
+                <button id="create-card" class="btn btn-success">Create Card</button>
+            </div>
+            <div class="form-group">
+                <input type="text" id="update-card-id" placeholder="Card ID to update">
+                <input type="text" id="update-card-pan" placeholder="New PAN">
+                <input type="text" id="update-card-cvv" placeholder="New CVV">
+                <input type="text" id="update-card-name" placeholder="New Name">
+                <input type="text" id="update-card-surname" placeholder="New Surname">
+                <input type="text" id="update-card-currency" placeholder="New Currency">
+                <input type="number" id="update-card-balance" placeholder="New Balance" step="0.01">
+                <button id="update-card" class="btn btn-warning">Update Card</button>
+            </div>
+            <div class="form-group">
+                <input type="text" id="delete-card-id" placeholder="Card ID to delete">
+                <button id="delete-card" class="btn btn-danger">Delete Card</button>
+            </div>
+            <button id="load-cards" class="btn btn-info">Load All Cards</button>
+            <div id="cards-list"></div>
+        </div>
+
+        <!-- Money Operations Section -->
+        <div class="section">
+            <h2>Money Operations</h2>
+            <div class="form-group">
+                <h3>Transfer Money</h3>
+                <input type="text" id="transfer-from" placeholder="From PAN">
+                <input type="text" id="transfer-to" placeholder="To PAN">
+                <input type="number" id="transfer-amount" placeholder="Amount" step="0.01">
+                <button id="transfer-money" class="btn btn-primary">Transfer</button>
+            </div>
+            <div class="form-group">
+                <h3>Withdraw Money</h3>
+                <input type="text" id="withdraw-pan" placeholder="PAN">
+                <input type="text" id="withdraw-cvv" placeholder="CVV" maxlength="3">
+                <input type="number" id="withdraw-amount" placeholder="Amount" step="0.01">
+                <button id="withdraw-money" class="btn btn-warning">Withdraw</button>
+            </div>
+            <div class="form-group">
+                <h3>Deposit Money</h3>
+                <input type="text" id="deposit-pan" placeholder="PAN">
+                <input type="number" id="deposit-amount" placeholder="Amount" step="0.01">
+                <button id="deposit-money" class="btn btn-success">Deposit</button>
+            </div>
+        </div>
+
+        <!-- Cards Info List -->
+        <div class="section">
+            <h2>Cards Information</h2>
+            <button id="refresh-cards-info" class="btn btn-info">Refresh Cards List</button>
+            <div id="cards-info-list"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
